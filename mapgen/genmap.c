@@ -196,6 +196,21 @@ void square(int **map, int x, int y, int length)
 
 
 
+void write_map(char *filename, int **map, int width, int height)
+{
+    FILE *file = fopen(filename, "w");
+    for(int y = 0; y < height; y++)
+    {
+        for(int x = 0; x < width; x++)
+        {
+            fprintf(file, "%d ", map[y][x]);
+        }
+        fprintf(file, "\n");
+    }
+    fclose(file);
+}
+
+
 int main(int argc, char **argv)
 {
 
@@ -237,7 +252,6 @@ int main(int argc, char **argv)
     build_map(map, width, height);
     print_map(map, width, height);
 
-
     printf("\n\n---mod 100 for testing---\n\n");
     for(int y = 0; y < height; y++)
     {
@@ -255,6 +269,8 @@ int main(int argc, char **argv)
     }
 
     print_map(map, width, height);
+    printf("Writing map to file: %s\n", filename);
+    write_map(filename, map, width, height);
 
     return EXIT_SUCCESS;
 }
