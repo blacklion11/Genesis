@@ -47,7 +47,7 @@ public class MapViewer extends JFrame
 	
 	public static void main(String[] args)
 	{
-		MapViewer viewer = new MapViewer("test");
+		MapViewer viewer = new MapViewer(args[0]);
 	}
 
 }
