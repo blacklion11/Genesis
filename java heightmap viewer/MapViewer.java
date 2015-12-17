@@ -11,16 +11,16 @@ public class MapViewer extends JFrame
 	int width;
 	int height;
 	int[][] map;
+	Color[][] tiles;
 	ArrayList<String> lines;
-	
+	MapPanel panel;
 	
 	public MapViewer()
 	{
 		setSize(400,400);
-		setResizable(false);
+		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setVisible(true);
 	}
 	
 	public MapViewer(String filename)
@@ -28,16 +28,6 @@ public class MapViewer extends JFrame
 		this();
 		
 		readFile(filename);
-		parseLines();
-		
-		for(int i = 0; i < map.length; i++)
-		{
-			for(int j = 0; j < map[0].length; j++)
-			{
-				System.out.print(map[i][j]);
-			}
-			System.out.println();
-		}
 	}
 	
 	void readFile(String filename)
@@ -80,10 +70,50 @@ public class MapViewer extends JFrame
 		}
 	}
 	
+	void grade()
+	{
+		tiles = new Color[map.length][map[0].length];
+		for(int y = 0; y < map.length; y++)
+		{
+			for(int x = 0; x < map[0].length; x++)
+			{
+				tiles[y][x] = new Color(map[y][x], map[y][x], map[y][x]);
+			}
+		}
+	}
+	
+	void setPane()
+	{
+		System.out.println("\nSetting pane");
+		
+		panel = new MapPanel(tiles);
+		//panel.setBackground(Color.BLUE);
+		add(panel);
+		
+		setVisible(true);
+	}
+	
+	void printMap()
+	{
+		for(int i = 0; i < map.length; i++)
+		{
+			for(int j = 0; j < map[0].length; j++)
+			{
+				System.out.print(map[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}
+	
 	
 	public static void main(String[] args)
 	{
 		MapViewer viewer = new MapViewer(args[0]);
+		
+		viewer.parseLines();
+		viewer.printMap();
+		viewer.grade();
+		viewer.setPane();
 	}
 
 }
