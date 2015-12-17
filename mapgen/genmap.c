@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <stdarg.h>
+#include <stdbool.h>
 
 void diamond(int**, int, int, int, int, int);
 void square(int**, int, int ,int);
@@ -47,6 +48,13 @@ int average(int num, ... )
     va_end(args);
     
     return sum / num;
+}
+
+/* This function gives a boolean value back of whether a value should be added (true) or subtracted (false)
+ */
+bool should_add()
+{
+    return rand() % 2;
 }
 
 
@@ -148,36 +156,87 @@ int** build_map(int **map, int width, int height)
 
 void diamond (int** map, int width, int height, int x, int y, int length)
 {
+    int salt;
+
     // top edge
     if(y - length == 0)
     {
-        map[y - length][x] = average(3, map[y][x], map[y - length][x - length], map[y - length][x + length]);       
+        salt = rand() % length;
+        if(should_add())
+        {
+            map[y - length][x] = average(3, map[y][x], map[y - length][x - length], map[y - length][x + length]) + salt;       
+        }
+        else
+        {
+            map[y - length][x] = average(3, map[y][x], map[y - length][x - length], map[y - length][x + length]) - salt;       
+        }
     }
     // bottom edge
     if(y + length == height - 1)
     {
-        map[y + length][x] = average(3, map[y][x], map[y + length][x - length], map[y + length][x + length]);   
+        salt = rand() % length;
+        if(should_add())
+        {
+            map[y + length][x] = average(3, map[y][x], map[y + length][x - length], map[y + length][x + length]) + salt;
+        }
+        else
+        {
+            map[y + length][x] = average(3, map[y][x], map[y + length][x - length], map[y + length][x + length]) - salt;
+        }
     }
     //internal y index
     else
     {
-        map[y + length][x] = average(4, map[y][x], map[y + length][x - length], map[y + length][x + length], map[y + 2 * length][x]);
+        salt = rand() % length;
+        if(should_add())
+        {
+            map[y + length][x] = average(4, map[y][x], map[y + length][x - length], map[y + length][x + length], map[y + 2 * length][x]) + salt;
+        }
+        else
+        {
+            map[y + length][x] = average(4, map[y][x], map[y + length][x - length], map[y + length][x + length], map[y + 2 * length][x]) - salt;
+        }
     }
+
 
     // left edge
     if(x - length == 0)
     {
-        map[y][x - length] = average(3, map[y][x], map[y - length][x - length], map[y + length][x - length]);
+        salt = rand() % length;
+        if(should_add())
+        {
+            map[y][x - length] = average(3, map[y][x], map[y - length][x - length], map[y + length][x - length]) + salt;
+        }
+        else
+        {
+            map[y][x - length] = average(3, map[y][x], map[y - length][x - length], map[y + length][x - length]) - salt;
+        }
     }
     // right edge
     if(x + length == width - 1)
     {
-        map[y][x + length] = average(3, map[y][x], map[y - length][x + length], map[y + length][x + length]);
+        salt = rand() % length;
+        if(should_add())
+        {
+            map[y][x + length] = average(3, map[y][x], map[y - length][x + length], map[y + length][x + length]) + salt;
+        }
+        else
+        {
+            map[y][x + length] = average(3, map[y][x], map[y - length][x + length], map[y + length][x + length]) - salt; 
+        }
     }
     //internal x index
     else
     {
-        map[y][x + length] = average(4, map[y][x], map[y - length][x - length], map[y + length][x + length], map[y][x + 2 * length]);
+        salt = rand() % length;
+        if(should_add())
+        {
+            map[y][x + length] = average(4, map[y][x], map[y - length][x - length], map[y + length][x + length], map[y][x + 2 * length]) + salt;
+        }
+        else
+        {
+            map[y][x + length] = average(4, map[y][x], map[y - length][x - length], map[y + length][x + length], map[y][x + 2 * length]) - salt;
+        }
     }
 
 }
@@ -185,13 +244,54 @@ void diamond (int** map, int width, int height, int x, int y, int length)
 
 void square(int **map, int x, int y, int length)
 {
-    map[y - length / 2][x - length / 2] = average(4, map[y - length][x - length], map[y - length][x], map[y][x - length], map[y][x]);
-    
-    map[y - length / 2][x + length / 2] = average(4, map[y - length][x], map[y - length][x + length], map[y][x + length], map[y][x]);
-   
-    map[y + length / 2][x - length / 2] = average(4, map[y][x - length], map[y + length][x - length], map[y + length][x], map[y][x]);
+    int salt;
 
-    map[y + length / 2][x + length / 2] = average(4, map[y][x + length], map[y + length][x], map[y + length][x + length], map[y][x]);
+    salt = rand() % length;
+
+    if(should_add())
+    {
+        map[y - length / 2][x - length / 2] = average(4, map[y - length][x - length], map[y - length][x], map[y][x - length], map[y][x]) + salt;
+    }
+    else
+    {
+        map[y - length / 2][x - length / 2] = average(4, map[y - length][x - length], map[y - length][x], map[y][x - length], map[y][x]) - salt;
+    }
+    
+    
+    salt = rand() % length;
+
+    if(should_add())
+    {
+        map[y - length / 2][x + length / 2] = average(4, map[y - length][x], map[y - length][x + length], map[y][x + length], map[y][x]) + salt;
+    }
+    else
+    {
+        map[y - length / 2][x + length / 2] = average(4, map[y - length][x], map[y - length][x + length], map[y][x + length], map[y][x]) - salt;
+    }
+   
+
+    salt = rand() % length;
+
+    if(should_add())
+    {
+        map[y + length / 2][x - length / 2] = average(4, map[y][x - length], map[y + length][x - length], map[y + length][x], map[y][x]) + salt;
+    }
+    else
+    {
+        map[y + length / 2][x - length / 2] = average(4, map[y][x - length], map[y + length][x - length], map[y + length][x], map[y][x]) - salt; 
+    }
+
+
+    salt = rand() % length;
+
+    if(should_add())
+    {
+        map[y + length / 2][x + length / 2] = average(4, map[y][x + length], map[y + length][x], map[y + length][x + length], map[y][x]) + salt;
+    }
+    else
+    {
+        map[y + length / 2][x + length / 2] = average(4, map[y][x + length], map[y + length][x], map[y + length][x + length], map[y][x]) - salt;  
+    }
 }
 
 
