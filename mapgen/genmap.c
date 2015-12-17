@@ -96,10 +96,10 @@ int** build_map(int **map, int width, int height)
     // set the corner seeds
     srand(time(NULL));
     int seed1, seed2, seed3, seed4;
-    seed1 = rand() % 1000;
-    seed2 = rand() % 1000;
-    seed3 = rand() % 1000;
-    seed4 = rand() % 1000;
+    seed1 = rand() % 255;
+    seed2 = rand() % 255;
+    seed3 = rand() % 255;
+    seed4 = rand() % 255;
 
     map[0][0] = seed1;
     map[0][width - 1] = seed2;
@@ -252,6 +252,7 @@ int main(int argc, char **argv)
     build_map(map, width, height);
     print_map(map, width, height);
 
+    /*
     printf("\n\n---mod 100 for testing---\n\n");
     for(int y = 0; y < height; y++)
     {
@@ -267,6 +268,7 @@ int main(int argc, char **argv)
             }
         }
     }
+    */
 
     print_map(map, width, height);
     printf("Writing map to file: %s\n", filename);
