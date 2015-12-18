@@ -349,7 +349,7 @@ int main(int argc, char **argv)
     printf("Original:\n");
     print_map(map, width, height);
     printf("Building map...\n");
-    build_map(map, width, height, 1.4f);
+    build_map(map, width, height, 2.0f);
     print_map(map, width, height);
 
     /*
