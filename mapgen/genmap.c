@@ -295,6 +295,22 @@ void square(int **map, int x, int y, int length, float roughness)
 }
 
 
+/*
+ * this function makes sure the heightmap is within a given bounds
+ */
+void clip(int **map, int width, int height, int top, int bottom)
+{
+    for(int y = 0; y < height; y++)
+    {
+        for(int x = 0; x < width; x++)
+        {
+            if(map[y][x] > top) map[y][x] = top;
+            if(map[y][x] < bottom) map[y][x] = bottom;
+        }
+    }
+}
+
+
 
 void write_map(char *filename, int **map, int width, int height)
 {
@@ -350,6 +366,7 @@ int main(int argc, char **argv)
     print_map(map, width, height);
     printf("Building map...\n");
     build_map(map, width, height, 2.0f);
+    clip(map, width, height, 255, 0);
     print_map(map, width, height);
 
     /*
