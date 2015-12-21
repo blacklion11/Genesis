@@ -385,7 +385,7 @@ int main(int argc, char **argv)
     //print_map(map, width, height);
     printf("Building map...\n");
     build_map(map, width, height, roughness);
-    clip(map, width, height, 1000, 0);
+    clip(map, width, height, 1000, -1000);
     print_map(map, width, height);
 
     /*
