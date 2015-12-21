@@ -250,11 +250,11 @@ void square(int **map, int x, int y, int length, float roughness)
 
     if(should_add())
     {
-        map[y - length / 2][x - length / 2] = average(4, map[y - length][x - length], map[y - length][x], map[y][x - length], map[y][x]) + (salt * roughness);
+        map[y - length / 2][x - length / 2] = average(4, map[y - length][x - length], map[y - length][x], map[y][x - length], map[y][x]);// + (salt * roughness);
     }
     else
     {
-        map[y - length / 2][x - length / 2] = average(4, map[y - length][x - length], map[y - length][x], map[y][x - length], map[y][x]) - (salt * roughness);
+        map[y - length / 2][x - length / 2] = average(4, map[y - length][x - length], map[y - length][x], map[y][x - length], map[y][x]);// - (salt * roughness);
     }
     
     
@@ -262,11 +262,11 @@ void square(int **map, int x, int y, int length, float roughness)
 
     if(should_add())
     {
-        map[y - length / 2][x + length / 2] = average(4, map[y - length][x], map[y - length][x + length], map[y][x + length], map[y][x]) + (salt * roughness);
+        map[y - length / 2][x + length / 2] = average(4, map[y - length][x], map[y - length][x + length], map[y][x + length], map[y][x]);// + (salt * roughness);
     }
     else
     {
-        map[y - length / 2][x + length / 2] = average(4, map[y - length][x], map[y - length][x + length], map[y][x + length], map[y][x]) - (salt * roughness);
+        map[y - length / 2][x + length / 2] = average(4, map[y - length][x], map[y - length][x + length], map[y][x + length], map[y][x]);// - (salt * roughness);
     }
    
 
@@ -274,11 +274,11 @@ void square(int **map, int x, int y, int length, float roughness)
 
     if(should_add())
     {
-        map[y + length / 2][x - length / 2] = average(4, map[y][x - length], map[y + length][x - length], map[y + length][x], map[y][x]) + (salt * roughness);
+        map[y + length / 2][x - length / 2] = average(4, map[y][x - length], map[y + length][x - length], map[y + length][x], map[y][x]);// + (salt * roughness);
     }
     else
     {
-        map[y + length / 2][x - length / 2] = average(4, map[y][x - length], map[y + length][x - length], map[y + length][x], map[y][x]) - (salt * roughness); 
+        map[y + length / 2][x - length / 2] = average(4, map[y][x - length], map[y + length][x - length], map[y + length][x], map[y][x]);// - (salt * roughness); 
     }
 
 
@@ -286,11 +286,11 @@ void square(int **map, int x, int y, int length, float roughness)
 
     if(should_add())
     {
-        map[y + length / 2][x + length / 2] = average(4, map[y][x + length], map[y + length][x], map[y + length][x + length], map[y][x]) + (salt * roughness);
+        map[y + length / 2][x + length / 2] = average(4, map[y][x + length], map[y + length][x], map[y + length][x + length], map[y][x]);// + (salt * roughness);
     }
     else
     {
-        map[y + length / 2][x + length / 2] = average(4, map[y][x + length], map[y + length][x], map[y + length][x + length], map[y][x]) - (salt * roughness);  
+        map[y + length / 2][x + length / 2] = average(4, map[y][x + length], map[y + length][x], map[y + length][x + length], map[y][x]);// - (salt * roughness);  
     }
 }
 
