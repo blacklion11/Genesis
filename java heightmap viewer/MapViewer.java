@@ -83,7 +83,9 @@ public class MapViewer extends JFrame
 		{
 			for(int x = 0; x < map[0].length; x++)
 			{
-				tiles[y][x] = new Color(map[y][x], map[y][x], map[y][x]);
+				float percentage = ((float)map[y][x]) / max;
+				float value = percentage * 255;
+				tiles[y][x] = new Color((int) value, (int) value, (int) value);
 			}
 		}
 	}
@@ -108,6 +110,8 @@ public class MapViewer extends JFrame
 			}
 			System.out.println();
 		}
+		System.out.println();
+		System.out.println("Max value: " + max);
 	}
 	
 	
@@ -117,7 +121,6 @@ public class MapViewer extends JFrame
 		
 		viewer.parseLines();
 		viewer.printMap();
-		//System.out.println("Max value: " + max);
 		viewer.grade();
 		viewer.setPane();
 	}
