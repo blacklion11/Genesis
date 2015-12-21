@@ -128,7 +128,7 @@ int** build_map(int **map, int width, int height, float roughness)
         {
             for(int x = 0; x < width / 2 / length; x++)
             {
-                printf("length: %d\n", length);
+                //printf("length: %d\n", length);
                 diamond(map, width, height, length + (x * 2 * length), length + (y * 2 * length), length, roughness);
             }
         }
@@ -362,10 +362,10 @@ int main(int argc, char **argv)
     printf("map is %dx%d\n", width, height);
 
     int **map = generate_map(width, height);
-    printf("Original:\n");
-    print_map(map, width, height);
+    //printf("Original:\n");
+    //print_map(map, width, height);
     printf("Building map...\n");
-    build_map(map, width, height, 2.0f);
+    build_map(map, width, height, 0.5f);
     clip(map, width, height, 255, 0);
     print_map(map, width, height);
 
@@ -387,7 +387,7 @@ int main(int argc, char **argv)
     }
     */
 
-    print_map(map, width, height);
+    //print_map(map, width, height);
     printf("Writing map to file: %s\n", filename);
     write_map(filename, map, width, height);
 
