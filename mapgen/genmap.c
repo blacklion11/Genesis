@@ -9,6 +9,7 @@
 
 void diamond(int**, int, int, int, int, int, float);
 void square(int**, int, int ,int, float);
+void square_without_salt(int**, int, int ,int);
 
 
 void halp(const char *prog)
@@ -242,6 +243,20 @@ void diamond (int** map, int width, int height, int x, int y, int length, float 
 }
 
 
+void square_without_salt(int **map, int x, int y, int length)
+{
+
+    map[y - length / 2][x - length / 2] = average(4, map[y - length][x - length], map[y - length][x], map[y][x - length], map[y][x]);
+
+    map[y - length / 2][x + length / 2] = average(4, map[y - length][x], map[y - length][x + length], map[y][x + length], map[y][x]);
+
+    map[y + length / 2][x - length / 2] = average(4, map[y][x - length], map[y + length][x - length], map[y + length][x], map[y][x]);
+
+    map[y + length / 2][x + length / 2] = average(4, map[y][x + length], map[y + length][x], map[y + length][x + length], map[y][x]);
+
+
+}
+
 void square(int **map, int x, int y, int length, float roughness)
 {
     int salt;
@@ -250,11 +265,11 @@ void square(int **map, int x, int y, int length, float roughness)
 
     if(should_add())
     {
-        map[y - length / 2][x - length / 2] = average(4, map[y - length][x - length], map[y - length][x], map[y][x - length], map[y][x]);// + (salt * roughness);
+        map[y - length / 2][x - length / 2] = average(4, map[y - length][x - length], map[y - length][x], map[y][x - length], map[y][x]) + (salt * roughness);
     }
     else
     {
-        map[y - length / 2][x - length / 2] = average(4, map[y - length][x - length], map[y - length][x], map[y][x - length], map[y][x]);// - (salt * roughness);
+        map[y - length / 2][x - length / 2] = average(4, map[y - length][x - length], map[y - length][x], map[y][x - length], map[y][x]) - (salt * roughness);
     }
     
     
@@ -262,11 +277,11 @@ void square(int **map, int x, int y, int length, float roughness)
 
     if(should_add())
     {
-        map[y - length / 2][x + length / 2] = average(4, map[y - length][x], map[y - length][x + length], map[y][x + length], map[y][x]);// + (salt * roughness);
+        map[y - length / 2][x + length / 2] = average(4, map[y - length][x], map[y - length][x + length], map[y][x + length], map[y][x]) + (salt * roughness);
     }
     else
     {
-        map[y - length / 2][x + length / 2] = average(4, map[y - length][x], map[y - length][x + length], map[y][x + length], map[y][x]);// - (salt * roughness);
+        map[y - length / 2][x + length / 2] = average(4, map[y - length][x], map[y - length][x + length], map[y][x + length], map[y][x]) - (salt * roughness);
     }
    
 
@@ -274,11 +289,11 @@ void square(int **map, int x, int y, int length, float roughness)
 
     if(should_add())
     {
-        map[y + length / 2][x - length / 2] = average(4, map[y][x - length], map[y + length][x - length], map[y + length][x], map[y][x]);// + (salt * roughness);
+        map[y + length / 2][x - length / 2] = average(4, map[y][x - length], map[y + length][x - length], map[y + length][x], map[y][x]) + (salt * roughness);
     }
     else
     {
-        map[y + length / 2][x - length / 2] = average(4, map[y][x - length], map[y + length][x - length], map[y + length][x], map[y][x]);// - (salt * roughness); 
+        map[y + length / 2][x - length / 2] = average(4, map[y][x - length], map[y + length][x - length], map[y + length][x], map[y][x]) - (salt * roughness); 
     }
 
 
@@ -286,11 +301,11 @@ void square(int **map, int x, int y, int length, float roughness)
 
     if(should_add())
     {
-        map[y + length / 2][x + length / 2] = average(4, map[y][x + length], map[y + length][x], map[y + length][x + length], map[y][x]);// + (salt * roughness);
+        map[y + length / 2][x + length / 2] = average(4, map[y][x + length], map[y + length][x], map[y + length][x + length], map[y][x]) + (salt * roughness);
     }
     else
     {
-        map[y + length / 2][x + length / 2] = average(4, map[y][x + length], map[y + length][x], map[y + length][x + length], map[y][x]);// - (salt * roughness);  
+        map[y + length / 2][x + length / 2] = average(4, map[y][x + length], map[y + length][x], map[y + length][x + length], map[y][x]) - (salt * roughness);  
     }
 }
 
