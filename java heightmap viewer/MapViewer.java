@@ -90,7 +90,7 @@ public class MapViewer extends JFrame
 			for(int x = 0; x < map[0].length; x++)
 			{
 				int range = max - min;
-				float percentage = ((float)map[y][x]) / range;
+				float percentage = ((float)map[y][x] + (0 - min)) / range;
 				float value = percentage * 255;
 				tiles[y][x] = new Color((int) value, (int) value, (int) value);
 			}
