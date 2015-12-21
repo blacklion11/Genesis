@@ -12,6 +12,7 @@ public class MapViewer extends JFrame
 	int height;
 	int[][] map;
 	int max;
+	int min;
 	Color[][] tiles;
 	ArrayList<String> lines;
 	MapPanel panel;
@@ -30,6 +31,7 @@ public class MapViewer extends JFrame
 		
 		readFile(filename);
 		max = 100; // max defaulted to 100 
+		min = 0; // min defaulted to 0
 	}
 	
 	void readFile(String filename)
@@ -72,6 +74,10 @@ public class MapViewer extends JFrame
 				{
 					max = map[i][j];
 				}
+				if(map[i][j] < min)
+				{
+					min = map[i][j];
+				}
 			}
 		}
 	}
@@ -83,7 +89,8 @@ public class MapViewer extends JFrame
 		{
 			for(int x = 0; x < map[0].length; x++)
 			{
-				float percentage = ((float)map[y][x]) / max;
+				int range = max - min;
+				float percentage = ((float)map[y][x]) / range;
 				float value = percentage * 255;
 				tiles[y][x] = new Color((int) value, (int) value, (int) value);
 			}
@@ -111,6 +118,7 @@ public class MapViewer extends JFrame
 			System.out.println();
 		}
 		System.out.println();
+		System.out.println("Min value: " + min);
 		System.out.println("Max value: " + max);
 	}
 	
