@@ -105,10 +105,10 @@ int** build_map(int **map, int width, int height, float roughness)
     // set the corner seeds
     srand(time(NULL));
     int seed1, seed2, seed3, seed4;
-    seed1 = rand() % 1000;
-    seed2 = rand() % 1000;
-    seed3 = rand() % 1000;
-    seed4 = rand() % 1000;
+    seed1 = rand() % 5000;
+    seed2 = rand() % 5000;
+    seed3 = rand() % 5000;
+    seed4 = rand() % 5000;
 
     map[0][0] = seed1;
     map[0][width - 1] = seed2;
@@ -385,7 +385,7 @@ int main(int argc, char **argv)
     //print_map(map, width, height);
     printf("Building map...\n");
     build_map(map, width, height, roughness);
-    clip(map, width, height, 1000, -1000);
+    clip(map, width, height, 10000, -10000);
     print_map(map, width, height);
 
     /*
