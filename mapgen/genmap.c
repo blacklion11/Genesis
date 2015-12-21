@@ -13,7 +13,7 @@ void square(int**, int, int ,int, float);
 
 void halp(const char *prog)
 {
-    printf("Usage: %s [-hwf]\n  --help\tDisplay this help screen\n  -h <number>\tSpecify the height (must be a 2^n + 1)\n  -w <number>\tSpecify the width (must be a 2^n + 1)\n  -f <filename>\tThe file to save the map to\n", prog);
+    printf("Usage: %s [-hwf]\n  --help\tDisplay this help screen\n  -h <number>\tSpecify the height (must be a 2^n + 1)\n  -w <number>\tSpecify the width (must be a 2^n + 1)\n  -r <number>\tSpecify the roughness of the terrain (positive number, may be a fractional decimal)\n  -f <filename>\tThe file to save the map to\n", prog);
 }
 
 void print_map(int **map, int width, int height)
@@ -330,7 +330,7 @@ void write_map(char *filename, int **map, int width, int height)
 int main(int argc, char **argv)
 {
 
-    if(argc < 2)
+    if(argc < 3)
     {
         halp(argv[0]);
         return EXIT_FAILURE;
@@ -342,8 +342,9 @@ int main(int argc, char **argv)
     }
 
     int c,width, height;
+    float roughness;
     char filename[BUFSIZ];
-    while((c = getopt(argc, argv, "h:w:f:")) > 0)
+    while((c = getopt(argc, argv, "h:w:f:r:")) > 0)
     {
         switch(c)
         {
@@ -355,6 +356,9 @@ int main(int argc, char **argv)
                 break;
             case 'f':
                 strcpy(filename, optarg);
+                break;
+            case 'r':
+                roughness = atof(optarg);
         }
     }
 
@@ -365,7 +369,7 @@ int main(int argc, char **argv)
     //printf("Original:\n");
     //print_map(map, width, height);
     printf("Building map...\n");
-    build_map(map, width, height, 0.5f);
+    build_map(map, width, height, roughness);
     clip(map, width, height, 255, 0);
     print_map(map, width, height);
 
