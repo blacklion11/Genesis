@@ -11,6 +11,7 @@ public class MapViewer extends JFrame
 	int width;
 	int height;
 	int[][] map;
+	int max;
 	Color[][] tiles;
 	ArrayList<String> lines;
 	MapPanel panel;
@@ -28,6 +29,7 @@ public class MapViewer extends JFrame
 		this();
 		
 		readFile(filename);
+		max = 100; // max defaulted to 100 
 	}
 	
 	void readFile(String filename)
@@ -66,6 +68,10 @@ public class MapViewer extends JFrame
 			for(int j = 0; j < tokens.length; j++)
 			{
 				map[i][j] = Integer.parseInt(tokens[j]);
+				if(map[i][j] > max)
+				{
+					max = map[i][j];
+				}
 			}
 		}
 	}
@@ -87,7 +93,6 @@ public class MapViewer extends JFrame
 		System.out.println("\nSetting pane");
 		
 		panel = new MapPanel(tiles);
-		//panel.setBackground(Color.BLUE);
 		add(panel);
 		
 		setVisible(true);
@@ -112,6 +117,7 @@ public class MapViewer extends JFrame
 		
 		viewer.parseLines();
 		viewer.printMap();
+		//System.out.println("Max value: " + max);
 		viewer.grade();
 		viewer.setPane();
 	}
