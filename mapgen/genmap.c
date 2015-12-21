@@ -105,10 +105,10 @@ int** build_map(int **map, int width, int height, float roughness)
     // set the corner seeds
     srand(time(NULL));
     int seed1, seed2, seed3, seed4;
-    seed1 = rand() % 255;
-    seed2 = rand() % 255;
-    seed3 = rand() % 255;
-    seed4 = rand() % 255;
+    seed1 = rand() % 1000;
+    seed2 = rand() % 1000;
+    seed3 = rand() % 1000;
+    seed4 = rand() % 1000;
 
     map[0][0] = seed1;
     map[0][width - 1] = seed2;
