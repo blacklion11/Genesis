@@ -125,27 +125,27 @@ public class MapViewer extends JFrame
 				int range = max - min;
 				float percentage = ((float)map[y][x] + (0 - min)) / range;
 				//float value = percentage * 255;
-				if(percentage < .1f)
+				if(percentage < .3f)
 				{
 					tiles[y][x] = dark_blue;
 				}
-				else if(percentage < .2f)
+				else if(percentage < .4f)
 				{
 					tiles[y][x] = light_blue;
 				}
-				else if(percentage < .3f)
+				else if(percentage < .5f)
 				{
 					tiles[y][x] = yellow;
 				}
-				else if(percentage < .4f)
+				else if(percentage < .6f)
 				{
 					tiles[y][x] = light_green;
 				}
-				else if(percentage < .5f)
+				else if(percentage < .7f)
 				{
 					tiles[y][x] = dark_green;
 				}
-				else if(percentage < .6f)
+				else if(percentage < .8f)
 				{
 					tiles[y][x] = light_gray;
 				}
@@ -189,7 +189,7 @@ public class MapViewer extends JFrame
 		MapViewer viewer = new MapViewer(args[0]);
 		
 		viewer.parseLines();
-		viewer.printMap();
+		//viewer.printMap();
 		//viewer.grade();
 		viewer.color();
 		viewer.setPane();
