@@ -17,6 +17,15 @@ public class MapViewer extends JFrame
 	ArrayList<String> lines;
 	MapPanel panel;
 	
+	Color dark_blue;
+	Color light_blue;
+	Color dark_green;
+	Color light_green;
+	Color light_gray;
+	Color dark_gray;
+	Color yellow;
+	
+	
 	public MapViewer()
 	{
 		setSize(400,400);
@@ -97,6 +106,58 @@ public class MapViewer extends JFrame
 		}
 	}
 	
+	void color()
+	{
+		tiles = new Color[map.length][map[0].length];
+		
+		dark_blue = new Color(30, 0, 152);
+		light_blue = new Color(102, 178, 255);
+		dark_green = new Color(0, 102, 0);
+		light_green = new Color(0, 255, 0);
+		dark_gray = new Color(64, 64, 64);
+		light_gray = new Color(128, 128, 128);
+		yellow = new Color(255, 255, 0);
+		
+		for(int y = 0; y < map.length; y++)
+		{
+			for(int x = 0; x < map[0].length; x++)
+			{
+				int range = max - min;
+				float percentage = ((float)map[y][x] + (0 - min)) / range;
+				//float value = percentage * 255;
+				if(percentage < .1f)
+				{
+					tiles[y][x] = dark_blue;
+				}
+				else if(percentage < .2f)
+				{
+					tiles[y][x] = light_blue;
+				}
+				else if(percentage < .3f)
+				{
+					tiles[y][x] = yellow;
+				}
+				else if(percentage < .4f)
+				{
+					tiles[y][x] = light_green;
+				}
+				else if(percentage < .5f)
+				{
+					tiles[y][x] = dark_green;
+				}
+				else if(percentage < .6f)
+				{
+					tiles[y][x] = light_gray;
+				}
+				else
+				{
+					tiles[y][x] = dark_gray;
+				}
+			}
+		}
+		
+	}
+	
 	void setPane()
 	{
 		System.out.println("\nSetting pane");
@@ -129,7 +190,8 @@ public class MapViewer extends JFrame
 		
 		viewer.parseLines();
 		viewer.printMap();
-		viewer.grade();
+		//viewer.grade();
+		viewer.color();
 		viewer.setPane();
 	}
 
