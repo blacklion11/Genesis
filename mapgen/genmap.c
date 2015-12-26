@@ -386,7 +386,7 @@ int main(int argc, char **argv)
     printf("Building map...\n");
     build_map(map, width, height, roughness);
     clip(map, width, height, 10000, -10000);
-    print_map(map, width, height);
+    //print_map(map, width, height);
 
     /*
     printf("\n\n---mod 100 for testing---\n\n");
