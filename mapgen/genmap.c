@@ -1,9 +1,6 @@
 
 #include <string.h>
-#include <unistd.h>
 #include <time.h>
-#include <stdarg.h>
-#include <stdbool.h>
 #include "genmap.h"
 
 
@@ -24,35 +21,6 @@ void print_map(int **map, int width, int height)
         printf("\n");
     }
 }
-
-
-/* Average function that takes in any number of parameters but is prefaced with the number 
- * of arguments being averaged
- */
-int average(int num, ... )
-{
-    va_list args;
-    int sum = 0;
-
-    /* Initializing arguments to store all values after num */
-    va_start( args, num );
-    /* Sum all the inputs; we still rely on the function caller to tell us how many there are */
-    for( int i = 0; i < num; i++)
-    {
-        sum += va_arg(args, int);
-    }
-    va_end(args);
-    
-    return sum / num;
-}
-
-/* This function gives a boolean value back of whether a value should be added (true) or subtracted (false)
- */
-bool should_add()
-{
-    return rand() % 2;
-}
-
 
 
 int** malloc_heightmap(int width, int height)

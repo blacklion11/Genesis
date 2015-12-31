@@ -4,11 +4,34 @@
 #include "genmap.h"
 
 
-void write_to_file()
+/*
+ * Average function that takes in any number of arguments but is prefaced with the number 
+ * of arguments being averaged
+ */
+int average( int num, ... )
 {
+    va_list args;
+    int sum = 0;
+    /* Initializing arguments to store all values after num */
+    va_start(args, num);
+    /* Sum all the inputs; We still rely on the function caller to tell us how many there are */
+    for(int i = 0; i < num; i++)
+    {
+        sum += va_arg(args, int);
+    }
+    va_end(args);
 
+    return sum / num;
 }
 
+/*
+ * This function returns a boolean value indicating if we should add (true) or subtract (false)
+ * We also rely on the function caller having initialized srand() beforehand
+ */
+bool should_add()
+{
+    return rand() % 2;
+}
 
 /*
  * This function writes the heightmap out to the specified file
