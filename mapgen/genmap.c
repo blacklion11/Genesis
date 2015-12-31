@@ -55,7 +55,7 @@ bool should_add()
 
 
 
-int** generate_map(int width, int height)
+int** malloc_heightmap(int width, int height)
 {
     /* malloc map*/
     int **map;
@@ -95,7 +95,7 @@ void randomize(int **map, int width, int height)
 }
 
 
-int** build_map(int **map, int width, int height, float roughness)
+int** generate_heightmap(int **map, int width, int height, float roughness)
 {
     // set the corner seeds
     srand(time(NULL));
@@ -305,36 +305,21 @@ void square(int **map, int x, int y, int length, float roughness)
 }
 
 
+
 /*
- * this function makes sure the heightmap is within a given bounds
+ *This function builds the blocks from the heightmap
  */
-void clip(int **map, int width, int height, int top, int bottom)
+void  build_blocks(struct Map* map, int** elevs)
 {
-    for(int y = 0; y < height; y++)
+    for(int y = 0; y < map->height; y++)
     {
-        for(int x = 0; x < width; x++)
+        for(int x = 0; x < map->width; x++)
         {
-            if(map[y][x] > top) map[y][x] = top;
-            if(map[y][x] < bottom) map[y][x] = bottom;
+            map->blocks[y][x]->elevation = elevs[y][x];
         }
     }
 }
 
-
-
-void write_map(char *filename, int **map, int width, int height)
-{
-    FILE *file = fopen(filename, "w");
-    for(int y = 0; y < height; y++)
-    {
-        for(int x = 0; x < width; x++)
-        {
-            fprintf(file, "%d ", map[y][x]);
-        }
-        fprintf(file, "\n");
-    }
-    fclose(file);
-}
 
 
 int main(int argc, char **argv)
@@ -375,35 +360,18 @@ int main(int argc, char **argv)
     printf("parameters parsed\n");
     printf("map is %dx%d\n", width, height);
 
-    int **map = generate_map(width, height);
+    int **heightmap = malloc_heightmap(width, height);
     //printf("Original:\n");
     //print_map(map, width, height);
     printf("Building map...\n");
-    build_map(map, width, height, roughness);
-    clip(map, width, height, 10000, -10000);
-    //print_map(map, width, height);
+    generate_heightmap(heightmap, width, height, roughness);
+    clip_heightmap(heightmap, width, height, 10000, -10000);
 
-    /*
-    printf("\n\n---mod 100 for testing---\n\n");
-    for(int y = 0; y < height; y++)
-    {
-        for(int x = 0; x < width; x++)
-        {
-            if(map[y][x] < 0)
-            {
-                map[y][x] = 0 -((0 - map[y][x]) % 100);
-            }
-            else
-            {
-                map[y][x] %= 100;
-            }
-        }
-    }
-    */
+    struct Map* map = malloc_map(width, height);
+    
 
-    //print_map(map, width, height);
     printf("Writing map to file: %s\n", filename);
-    write_map(filename, map, width, height);
+    write_heightmap(filename, map);
 
     return EXIT_SUCCESS;
 }
