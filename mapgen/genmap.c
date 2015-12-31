@@ -1,15 +1,10 @@
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <time.h>
 #include <stdarg.h>
 #include <stdbool.h>
-
-void diamond(int**, int, int, int, int, int, float);
-void square(int**, int, int ,int, float);
-void square_without_salt(int**, int, int ,int);
+#include "genmap.h"
 
 
 void halp(const char *prog)
