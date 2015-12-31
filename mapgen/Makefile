@@ -9,4 +9,4 @@ genmap: genmap.c
 	gcc -Wall --std=gnu99 -o genmap genmap.c
 
 clean:
-	rm -rvf *.o create_map
+	rm -rvf *.o genmap
