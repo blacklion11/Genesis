@@ -71,12 +71,12 @@ struct Map* malloc_map(int width, int height)
 {
     struct Map* map = (struct Map*) malloc(sizeof(struct Map));
 
-    map->blocks = (struct Block***) malloc(sizeof(struct Block**));
+    map->blocks = (struct Block***) malloc(sizeof(struct Block**) * width * height);
 
 
     for(int i = 0; i < height; i++)
     {
-        map->blocks[i] = (struct Block**) malloc(sizeof(struct Block*));
+        map->blocks[i] = (struct Block**) malloc(sizeof(struct Block*) * width);
     }
 
     for(int y = 0; y < height; y++)

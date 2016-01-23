@@ -279,6 +279,7 @@ void square(int **map, int x, int y, int length, float roughness)
  */
 void  build_blocks(struct Map* map, int** elevs)
 {
+    printf("Building map blocks...\n");
     for(int y = 0; y < map->height; y++)
     {
         for(int x = 0; x < map->width; x++)
@@ -336,7 +337,7 @@ int main(int argc, char **argv)
     clip_heightmap(heightmap, width, height, 10000, -10000);
 
     struct Map* map = malloc_map(width, height);
-    
+    build_blocks(map, heightmap); 
 
     printf("Writing map to file: %s\n", filename);
     write_heightmap(filename, map);
