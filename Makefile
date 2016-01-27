@@ -1,8 +1,8 @@
 
 
 CC=gcc
-LDFLAGS=
+LDFLAGS=-lncurses
 CCFLAGS=
 
-main: main.c
-	gcc main.c -o run
+main: main.c gamemanager.c input.c
+	gcc $(LDFLAGS) main.c gamemanager.c input.c -o run
