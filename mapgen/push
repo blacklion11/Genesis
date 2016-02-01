@@ -1,6 +1,8 @@
-#! /bin/bash
+#! /usr/bin/expect -f
 
-git add --all
-git status 
-git commit -m "update"
-git push
+spawn git add --all
+spawn git status 
+spawn git commit -m "update"
+spawn git push
+expect "Username for 'https://github.com': "
+send "projectdev1\r"
