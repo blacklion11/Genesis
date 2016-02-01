@@ -8,3 +8,4 @@ expect "Username for 'https://github.com': "
 send "blacklion11\r"
 expect "Password for 'https://blacklion11@github.com': "
 send "projectdev\r"
+expect eof
