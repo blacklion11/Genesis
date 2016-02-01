@@ -1,22 +1,21 @@
 
 #include "genesis.h"
 
-extern struct Game game;
 
 
-int get_input()
+int get_input(struct Game* game)
 {
 
     if(getch() == 'q')
     {
-        game.running = false;
+        game->running = false;
     }
 
 
 }
 
 
-int w_get_input(WINDOW* win)
+int w_get_input(struct Game* game, WINDOW* win)
 {
 
 

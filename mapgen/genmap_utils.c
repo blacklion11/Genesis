@@ -39,7 +39,10 @@ bool should_add()
 void write_heightmap(char* filename, struct Map* map)
 {
     FILE *file = fopen(filename, "w");
-    
+   
+    fprintf(file, "%d\n", map->width);
+    fprintf(file, "%d\n", map->height);
+
     for(int y = 0; y < map->height; y++)
     {
         for(int x = 0; x < map->width; x++)

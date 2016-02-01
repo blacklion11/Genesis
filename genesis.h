@@ -2,7 +2,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include "ncurses.h"
+
+
+#define LOG(...) do{ \
+    FILE *file = fopen("log.txt", "a"); \
+    fprintf(file, __VA_ARGS__); \
+    fclose(file); \
+    } while(false)
+
+#define NDEBUG(...) mvprintw( 0, 0,  __VA_ARGS__ ); refresh()
+#define DEBUG(...) fprintf(stdout, __VA_ARGS__)
+
+struct Player
+{
+    int xpos,ypos, xblock, yblock;
+    char token;
+};
 
 struct Block
 {
@@ -17,6 +34,7 @@ struct Map
 
 struct World
 {
+    int width, height;
     struct Map* map;   
 };
 
@@ -24,6 +42,7 @@ struct Game
 {
     bool running;
     struct World* world;
+    struct Player* player;
 };
 
 
@@ -31,8 +50,8 @@ struct Game
 //Game Manager //////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
 
-int init_game();
-int run();
+int init_game(struct Game*);
+int run(struct Game *);
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -46,6 +65,52 @@ int init_ui();
 //Input Manager/////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-int get_input();
-int w_get_input(WINDOW*);
+int get_input(struct Game*);
+int w_get_input(struct Game*, WINDOW*);
+
+////////////////////////////////////////////////////////////////////////////////
+//Graphics Manager//////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+int draw_player(struct Player*);
+int draw_map(struct Map*);
+
+////////////////////////////////////////////////////////////////////////////////
+//Utilities/////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+int save_game(struct Game*);
+int load_game(struct Game*);
+struct Game* malloc_game();
+int malloc_player(struct Game*);
+int malloc_world(struct Game*);
+int malloc_map(struct Game*);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
