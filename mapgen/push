@@ -5,5 +5,6 @@ spawn git status
 spawn git commit -m "update"
 spawn git push
 expect "Username for 'https://github.com': "
-send "rojectdev1\r"
-spawn echo "\n"
+send "blacklion11\r"
+expect "Password for 'https://blacklion11@github.com': "
+send "projectdev1\r"
