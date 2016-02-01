@@ -95,19 +95,42 @@ int malloc_world(struct Game* game)
 {
     if(game == NULL)
     {
-        LOG("Game struct null\n");
+        LOG("Can't malloc world, Game struct null\n");
         return 1;
     }
 
     game->world = (struct World*) malloc(sizeof(struct World));
-
+    
 }
 
 
 int malloc_map(struct Game* game)
 {
 
+    if(game == NULL)
+    {
+        LOG("Can't malloc world, Game struct null\n");
+        return 1;
+    }
 
+    game->world->map = (struct Map*) malloc(sizeof(struct Map));
+
+    struct Map* map = game->world->map;
+
+    map->blocks = (struct Block***) malloc(game->world->height * sizeof(struct Block**));
+
+    for(int i = 0; i < game->world->height; i++)
+    {
+        map->blocks[i] = (struct Block**) malloc(game->world->width * sizeof(struct Block*));
+    }
+
+    for(int y = 0; y < game->world->height; y++)
+    {
+        for(int x = 0; x < game->world->width; x++)
+        {
+            map->blocks[y][x] = (struct Block*) malloc(sizeof(struct Block));
+        }
+    }
 }
 
 

@@ -14,7 +14,10 @@ int init_game(struct Game* game)
     // malloc the world
     malloc_world(game);
     LOG("World malloc'd\n");
-    
+   
+    // malloc the map
+    malloc_map(game);
+
     // load the game
     load_game(game);
 
