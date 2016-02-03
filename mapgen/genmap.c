@@ -4,6 +4,10 @@
 #include "genmap.h"
 
 
+
+int maxHeight, minHeight;
+
+
 void halp(const char *prog)
 {
     printf("Usage: %s [-hwf]\n  --help\tDisplay this help screen\n  -h <number>\tSpecify the height (must be a 2^n + 1)\n  -w <number>\tSpecify the width (must be a 2^n + 1)\n  -r <number>\tSpecify the roughness of the terrain (positive number, may be a fractional decimal)\n  -f <filename>\tThe file to save the map to\n", prog);
@@ -277,14 +281,62 @@ void square(int **map, int x, int y, int length, float roughness)
 /*
  *This function builds the blocks from the heightmap
  */
-void  build_blocks(struct Map* map, int** elevs)
+void build_blocks(struct Map* map, int** elevs)
 {
+    minHeight = maxHeight = elevs[0][0];
+
     printf("Building map blocks...\n");
     for(int y = 0; y < map->height; y++)
     {
         for(int x = 0; x < map->width; x++)
         {
             map->blocks[y][x]->elevation = elevs[y][x];
+            if(elevs[y][x] < minHeight) minHeight = elevs[y][x];
+            if(elevs[y][x] > maxHeight) maxHeight = elevs[y][x];
+        }
+    }
+}
+
+void id_blocks(struct Map* map)
+{
+    for(int y = 0; y < map->height; y++)
+    {
+        for(int x = 0; x < map->width; x++)
+        {
+           int range = maxHeight - minHeight;
+           float percentage = ((float) map->blocks[y][x]->elevation - minHeight) / range;
+
+           if(percentage < 1)
+           {
+               // mountain
+               map->blocks[y][x]->id = 6;
+           }
+           if(percentage < 0.7f)
+           {
+               // hills
+               map->blocks[y][x]->id = 5;
+           }
+           if(percentage < 0.6f)
+           {
+               // flatlands
+               map->blocks[y][x]->id = 4;
+           }
+           if(percentage < 0.45f)
+           {
+               // beach
+               map->blocks[y][x]->id = 3;
+           }
+           if(percentage < 0.35f)
+           {
+               // shallow water
+               map->blocks[y][x]->id = 2;
+           }
+           if(percentage < 0.2f)
+           {
+               // Deep ocean
+               map->blocks[y][x]->id = 1;
+           }
+
         }
     }
 }
@@ -338,10 +390,11 @@ int main(int argc, char **argv)
 
     struct Map* map = malloc_map(width, height);
     build_blocks(map, heightmap); 
+    id_blocks(map);
 
     printf("Writing map to file: %s\n", filename);
-    write_heightmap(filename, map);
-
+    //write_heightmap(filename, map);
+    write_map(filename, map);
     return EXIT_SUCCESS;
 }
 

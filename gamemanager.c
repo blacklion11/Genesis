@@ -15,9 +15,6 @@ int init_game(struct Game* game)
     malloc_world(game);
     LOG("World malloc'd\n");
    
-    // malloc the map
-    malloc_map(game);
-
     // load the game
     load_game(game);
 
@@ -37,6 +34,7 @@ int run(struct Game* game)
 
 
         //draw the world
+        draw_world(game->world);
         //draw the player
         draw_player(game->player);
 

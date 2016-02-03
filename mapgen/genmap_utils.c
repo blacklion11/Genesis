@@ -55,6 +55,27 @@ void write_heightmap(char* filename, struct Map* map)
 }
 
 /*
+ * This function writes the generated map to the file
+ */
+void write_map(char* filename, struct Map* map)
+{
+    FILE *file = fopen(filename, "w");
+
+    fprintf(file, "%d\n", map->width);
+    fprintf(file, "%d\n", map->width);
+
+    for(int y = 0; y < map->height; y++)
+    {
+        for(int x = 0; x < map->width; x++)
+        {
+            fprintf(file, "%d ", map->blocks[y][x]->id);
+        }
+        fprintf(file, "\n");
+    }
+    fclose(file);
+}
+
+/*
  * This function makes sure the heightmap is within a given bounds
  */
 

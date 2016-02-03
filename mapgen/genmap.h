@@ -25,12 +25,13 @@ struct Map
 void    diamond(int**, int, int, int, int, int, float);
 void    square(int**, int, int, int, float);
 void    square_without_salt(int**, int, int, int);
-
+void    id_blocks(struct Map* map);
 /*
  * Util functions
  */
 int     average( int, ... );
 bool    should_add();
 void    write_heightmap(char *, struct Map*);
+void    write_map(char *, struct Map*);
 void    clip_heightmap(int**, int, int, int, int);
 struct  Map* malloc_map(int, int);

@@ -40,13 +40,54 @@ int load_game(struct Game* game)
             LOG("World height parsed: %d\n", game->world->height);
             continue;
         }
-
-        //continue with loading the rest of the map;
+        if(linenum > 1)break;
+    
     }
+    fclose(file);
+
+    //malloc the map
+    malloc_map(game);
+
+    //load in the actual map
+    load_world(game->world);
 
     LOG("Save file loaded\n");
 }
 
+int load_world(struct World* world)
+{
+    FILE *file = fopen("save.txt", "r");
+    
+    char buff[BUFSIZ];
+    // bypass the first two lines (which contain the width and height)
+    fgets(buff, BUFSIZ, file);
+    fgets(buff, BUFSIZ, file);
+
+    int row = 2;
+    while(fgets(buff, BUFSIZ, file) != NULL)
+    {
+        buff[strlen(buff) - 1] = '\0';
+
+        LOG("string read in from file: %s\n", buff);
+
+        // tokenize the map 
+        char *token;
+        token = strtok(buff, " ");
+
+        int col = 0;
+        while(token != NULL)
+        {
+            LOG("num cols = %d, token: %s\n", col, token);
+            //LOG("token is %s\n", token);
+            world->map->blocks[row][col]->id = atoi(token);
+            col++;
+            token = strtok(NULL, " ");
+        }
+        
+        row++;
+    }
+    fclose(file);
+}
 
 int save_game(struct Game* game)
 {
