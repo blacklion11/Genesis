@@ -2,6 +2,12 @@
 #include "genesis.h"
 
 
+
+int init_colors()
+{
+   init_pair(1, COLOR_GREEN, COLOR_BLACK); 
+}
+
 int load_game(struct Game* game)
 {
     LOG("Loading save file\n");
@@ -68,7 +74,7 @@ int load_world(struct World* world)
     {
         buff[strlen(buff) - 1] = '\0';
 
-        LOG("string read in from file: %s\n", buff);
+        LOG("line %d read from file\n", row);
 
         // tokenize the map 
         char *token;
@@ -77,9 +83,10 @@ int load_world(struct World* world)
         int col = 0;
         while(token != NULL)
         {
-            LOG("num cols = %d, token: %s\n", col, token);
+            //LOG("num cols = %d, token: %s\n", col, token);
             //LOG("token is %s\n", token);
-            world->map->blocks[row][col]->id = atoi(token);
+            world->map->blocks[row-2][col]->id = atoi(token);
+            build_block(world->map->blocks[row-2][col]);
             col++;
             token = strtok(NULL, " ");
         }
@@ -87,6 +94,34 @@ int load_world(struct World* world)
         row++;
     }
     fclose(file);
+    
+    LOG("Map read in from file\n");
+}
+
+int build_block(struct Block* block)
+{
+    switch(block->id)
+    {
+        case 1:
+            block->token = '~';
+            break;
+        case 2:
+            block->token = '~';
+            break;
+        case 3:
+            block->token = '.';
+            break;
+        case 4:
+            block->token = '-';
+            break;
+        case 5:
+            block->token = 'n';
+            break;
+        case 6:
+            block->token = '^';
+            break;
+
+    }
 }
 
 int save_game(struct Game* game)
@@ -105,6 +140,7 @@ int save_game(struct Game* game)
         fprintf(file, "\n");
     }
     fclose(file);
+    LOG("Game saved\n");
 }
 
 
@@ -117,12 +153,14 @@ int malloc_player(struct Game* game)
     }
     game->player = (struct Player*) malloc(sizeof(struct Player));
 
-    game->player->xpos = 0;
-    game->player->ypos = 0;
-    game->player->xblock = 0;
-    game->player->yblock = 0;
+    getmaxyx(stdscr, game->player->ypos, game->player->xpos);
+    game->player->ypos /= 2;
+    game->player->xpos /= 2;
+    //game->player->yblock = 0;
+    //game->player->xblock = 0;
     game->player->token = '@';
 
+    LOG("Player malloc'd\n");
     return 0;
 }
 
@@ -141,7 +179,7 @@ int malloc_world(struct Game* game)
     }
 
     game->world = (struct World*) malloc(sizeof(struct World));
-    
+    LOG("World malloc'd\n");   
 }
 
 
@@ -172,6 +210,7 @@ int malloc_map(struct Game* game)
             map->blocks[y][x] = (struct Block*) malloc(sizeof(struct Block));
         }
     }
+    LOG("Map malloc'd\n");
 }
 
 

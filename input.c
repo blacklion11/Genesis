@@ -6,12 +6,25 @@
 int get_input(struct Game* game)
 {
 
-    if(getch() == 'q')
+    int key = getch();
+    switch(key)
     {
-        game->running = false;
+        case 'q':
+            game->running = false;
+            break;
+        case KEY_UP:
+            game->player->ypos--;
+            break;
+        case KEY_DOWN:
+            game->player->ypos++;
+            break;
+        case KEY_LEFT:
+            game->player->xpos--;
+            break;
+        case KEY_RIGHT:
+            game->player->xpos++;
+            break;
     }
-
-
 }
 
 

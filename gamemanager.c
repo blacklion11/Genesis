@@ -13,7 +13,6 @@ int init_game(struct Game* game)
 
     // malloc the world
     malloc_world(game);
-    LOG("World malloc'd\n");
    
     // load the game
     load_game(game);
@@ -32,14 +31,8 @@ int run(struct Game* game)
         // update the player
         // update the world
 
-
-        //draw the world
-        draw_world(game->world);
-        //draw the player
-        draw_player(game->player);
-
-        //update the ui (this will include drawing any additional windows)
-        
+        // Draw the shit to the screen
+        draw_shit(game);
 
         // update the ncurses window
         refresh();

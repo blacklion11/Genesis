@@ -2,22 +2,16 @@
 #include "genesis.h"
 
 
-
-int draw_player(struct Player* player)
+int draw_shit(struct Game* game)
 {
-    int x,y;
-    getmaxyx(stdscr, y, x);
-    NDEBUG("Width=%d Height=%d", x, y);
-    mvprintw(y/2,x/2,"%c", player->token);
+
+    // draw the world first
+    draw_world(game->world); 
+
+    // draw the player last
+    draw_player(game->player);
+
+    // draw any windows that may cover the player (e.g. menus)
 }
 
-int draw_world(struct World* world)
-{
-   for(int y = 0; y < world->height; y++)
-   {
-       for(int x = 0; x < world->width; x++)
-       {
-           mvprintw(y,x, "%d", world->map->blocks[y][x]->id);
-       }
-   }
-}
+
