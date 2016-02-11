@@ -13,7 +13,11 @@ int init_game(struct Game* game)
 
     // malloc the world
     malloc_world(game);
-   
+
+    //malloc the camera
+    malloc_camera(game->world);
+    camera_set_size(game->world->camera, screen_width(stdscr), screen_height(stdscr));
+
     // load the game
     load_game(game);
 
@@ -30,6 +34,7 @@ int run(struct Game* game)
         
         // update the player
         // update the world
+        world_update(game->world);
 
         // Draw the shit to the screen
         draw_shit(game);

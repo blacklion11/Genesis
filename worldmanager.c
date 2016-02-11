@@ -2,13 +2,27 @@
 #include "genesis.h"
 
 
-int draw_world(struct World* world)
+
+int world_update(struct World* world)
 {
-    for(int y = 0; y < world->height; y++)
+    //update the camera
+    camera_update(world->camera);
+}
+
+int world_draw(struct World* world)
+{
+    for(int y = 0; y < world->camera->height; y++)
     {
-        for(int x = 0; x < world->width; x++)
+        for(int x = 0; x < world->camera->width; x++)
         {
-            mvprintw(y, x, "%c", world->map->blocks[y][x]->token);
+            struct Block* block = world->map->blocks[y + world->camera->y][x + world->camera->x];
+            attron(COLOR_PAIR(block->color));
+            mvprintw(y, x, "%c", block->token);
+            attroff(COLOR_PAIR(block->color));
         }
     }
 }
+
+
+
+

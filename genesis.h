@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "ncurses.h"
+#include "blocks.h"
 
 
 #define LOG(...) do{ \
@@ -14,6 +15,14 @@
 
 #define NDEBUG(...) mvprintw( 0, 0,  __VA_ARGS__ ); refresh()
 #define DEBUG(...) fprintf(stdout, __VA_ARGS__)
+
+#define PLAYER 1
+#define WATER_DEEP 2
+#define WATER_SHALLOW 3
+#define SAND 4
+#define GRASS 5
+#define HILL 6
+#define MOUNTAIN 7
 
 struct Player
 {
@@ -26,6 +35,8 @@ struct Block
     int id;
     int elevation;
     char token;
+    int color;
+    //void* type;
 };
 
 struct Map
@@ -33,10 +44,15 @@ struct Map
     struct Block*** blocks;
 };
 
+struct Camera
+{
+    int x,y,width,height,worldheight, worldwidth;
+};
 struct World
 {
     int width, height;
     struct Map* map;   
+    struct Camera* camera;
 };
 
 struct Game
@@ -68,6 +84,7 @@ int init_ui();
 
 int get_input(struct Game*);
 int w_get_input(struct Game*, WINDOW*);
+int move_player(struct Game*, short);
 
 ////////////////////////////////////////////////////////////////////////////////
 //Graphics Manager//////////////////////////////////////////////////////////////
@@ -87,20 +104,29 @@ struct Game* malloc_game();
 int malloc_player(struct Game*);
 int malloc_world(struct Game*);
 int malloc_map(struct Game*);
+int malloc_camera(struct World*);
+
+int screen_width(WINDOW *);
+int screen_height(WINDOW *);
 
 ///////////////////////////////////////////////////////////////////////////////
 //Player Manager///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-int draw_player(struct Player*);
+int player_draw(struct Player*);
 
 
+///////////////////////////////////////////////////////////////////////////////
+//Camera Manager///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+int camera_update(struct Camera*);
+int camera_set_size(struct Camera*, int, int);
 
 ///////////////////////////////////////////////////////////////////////////////
 //World Manager////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-int draw_world(struct World*);
-
-
+int world_draw(struct World*);
+int world_update(struct World*);
 
 
 

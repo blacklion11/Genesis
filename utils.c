@@ -5,7 +5,26 @@
 
 int init_colors()
 {
-   init_pair(1, COLOR_GREEN, COLOR_BLACK); 
+    //player color
+    init_pair(1, COLOR_GREEN, COLOR_BLACK); 
+    
+    //deep water
+    init_pair(2, COLOR_BLUE, COLOR_BLACK);
+
+    //shallow water
+    init_pair(3, COLOR_CYAN, COLOR_BLACK);
+
+    //sand
+    init_pair(4, COLOR_YELLOW, COLOR_BLACK);
+
+    //grass
+    init_pair(5, COLOR_BLACK, COLOR_GREEN);
+
+    //hill
+    init_pair(6, COLOR_GREEN, COLOR_BLACK);
+
+    //mountain
+    init_pair(7, COLOR_WHITE, COLOR_BLACK);
 }
 
 int load_game(struct Game* game)
@@ -30,7 +49,9 @@ int load_game(struct Game* game)
         // load in the width and height of the map so we can malloc it
         if(linenum == 0)
         {
-            game->world->width = atoi(buff);   
+            game->world->width = atoi(buff);
+            game->world->camera->worldwidth = game->world->width;
+            game->world->camera->x = game->world->width >> 1;
             LOG("Width set\n");
             linenum++;
             //NDEBUG("width = %d", game->world->width);
@@ -40,6 +61,8 @@ int load_game(struct Game* game)
         if(linenum == 1)
         {
             game->world->height = atoi(buff);
+            game->world->camera->worldheight = game->world->height;
+            game->world->camera->y = game->world->height >> 1;
             linenum++;
             //NDEBUG("height = %d", game->world->height);
             //NDEBUG("%s", buff);
@@ -104,21 +127,27 @@ int build_block(struct Block* block)
     {
         case 1:
             block->token = '~';
+            block->color = WATER_DEEP;
             break;
         case 2:
             block->token = '~';
+            block->color = WATER_SHALLOW;
             break;
         case 3:
             block->token = '.';
+            block->color = SAND;
             break;
         case 4:
             block->token = '-';
+            block->color = GRASS;
             break;
         case 5:
             block->token = 'n';
+            block->color = HILL;
             break;
         case 6:
             block->token = '^';
+            block->color = MOUNTAIN;
             break;
 
     }
@@ -213,15 +242,38 @@ int malloc_map(struct Game* game)
     LOG("Map malloc'd\n");
 }
 
+int malloc_camera(struct World* world)
+{
+    if(world == NULL)
+    {
+        LOG("Can't malloc camera, World is null\n");
+        return 1;
+    }
+
+    world->camera = (struct Camera *) malloc(sizeof(struct Camera));
+
+    world->camera->x = world->camera->y = 0;
+    world->camera->width = world->camera->height = 0;
+
+    LOG("Camera malloc'd\n");
+}
 
 
 
 
+int screen_width(WINDOW *win)
+{
+    int x,y;
+    getmaxyx(win,y,x);
+    return x;
+}
 
-
-
-
-
+int screen_height(WINDOW *win)
+{
+    int x,y;
+    getmaxyx(win,y,x);
+    return y;
+}
 
 
 
